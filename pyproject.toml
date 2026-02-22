@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "startion"
+version = "0.1.0"
+description = "Sync GitHub stars to Notion with AI-generated summaries"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx",
+    "loguru",
+    "notion-client",
+    "openai",
+    "python-dotenv",
+]
+
+[project.scripts]
+startion = "startion.cli:main"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

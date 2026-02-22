@@ -1,0 +1,34 @@
+name: Sync GitHub Stars to Notion
+
+on:
+  schedule:
+    # Every day at 00:00 UTC (08:00 Beijing time)
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run sync
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+          SUMMARY_LANGUAGE: ${{ secrets.SUMMARY_LANGUAGE }}
+        run: uv run startion sync
