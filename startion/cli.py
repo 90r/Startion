@@ -83,7 +83,7 @@ def cmd_sync(
 
     with GitHubClient(config.github_token) as github:
         logger.info("Fetching starred repos from GitHub…")
-        raw_repos = github.get_starred_repos()
+        raw_repos = github.get_starred_repos(config.github_username)
         logger.info("Found {} starred repos", len(raw_repos))
 
         if limit is not None:
