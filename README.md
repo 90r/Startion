@@ -12,6 +12,8 @@ Sync your GitHub stars to a Notion database with AI-generated summaries — then
 4. On subsequent runs, only new stars get summarized; unstarred repos are automatically archived
 5. Notion's built-in AI can then semantically search across all your starred projects
 
+> **Tip:** You can also sync another user's public stars by setting the `GITHUB_USERNAME` environment variable — useful for curating or exploring what others have starred.
+
 ## Setup
 
 ### Prerequisites
