@@ -45,13 +45,21 @@ class GitHubClient:
         return resp.json()["login"]
 
     def get_starred_repos(self, username: str = "") -> list[dict]:
-        """Fetch all starred repos with pagination."""
+        """Fetch all starred repos with pagination.
+
+        Uses the star+json media type so each item includes ``starred_at``.
+        Returned dicts have the shape ``{"starred_at": str, "repo": dict}``.
+        """
         repos: list[dict] = []
         page = 1
 
         while True:
             url = f"/users/{username}/starred" if username else "/user/starred"
-            resp = self._client.get(url, params={"page": page, "per_page": 100})
+            resp = self._client.get(
+                url,
+                params={"page": page, "per_page": 100},
+                headers={"Accept": "application/vnd.github.star+json"},
+            )
             resp.raise_for_status()
 
             data = resp.json()

@@ -19,6 +19,7 @@ DATABASE_PROPERTIES = {
     "Stars": {"number": {}},
     "AI Summary": {"rich_text": {}},
     "Owner": {"rich_text": {}},
+    "Starred At": {"date": {}},
     "Last Synced": {"date": {}},
 }
 
@@ -160,5 +161,8 @@ class NotionSync:
             props["AI Summary"] = {
                 "rich_text": [{"text": {"content": repo.ai_summary[:2000]}}]
             }
+
+        if repo.starred_at:
+            props["Starred At"] = {"date": {"start": repo.starred_at}}
 
         return props
